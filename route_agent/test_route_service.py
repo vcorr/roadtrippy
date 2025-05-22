@@ -1,5 +1,4 @@
 import os
-import json
 from dotenv import load_dotenv
 from route_planning_service import RouteService # Import necessary components
 
@@ -7,7 +6,7 @@ load_dotenv() # Load environment variables from .env file for the test script
 
 # --- Basic Test --- 
 if __name__ == '__main__':
-    print("--- Basic RouteService Test ---")
+    print("--- RouteService Test ---")
     actual_api_key = os.getenv("OPENROUTESERVICE_API_KEY") 
 
     if not actual_api_key:
@@ -30,17 +29,23 @@ if __name__ == '__main__':
             print(f"Result: {end_coords}")
 
             if start_coords and end_coords:
-                print(f"\nTesting route fetching from {start_place} to {end_place}")
-                route_data = route_service_instance.get_route_basic(start_coords, end_coords)
-                if route_data:
-                    print("\n--- Route Result (Raw) ---")
-                    # import json # json is already imported at the top
-                    print(json.dumps(route_data, indent=2))
-                else:
-                    print("\nFailed to fetch route.")
+                # Test the main method for getting place names (this is what you actually need!)
+                print(f"\n--- Testing Main Method: Get Places Along Route ---")
+                places = route_service_instance.get_places_along_route(start_place, end_place, interval_km=100)
+                print(f"Places along route from {start_place} to {end_place}:")
+                print(f"Found {len(places)} places at ~100km intervals:")
+                for i, place in enumerate(places):
+                    print(f"  {i+1}. {place}")
+                
+                # Test different interval
+                print(f"\n--- Testing with 150km intervals ---")
+                places_150 = route_service_instance.get_places_along_route(start_place, end_place, interval_km=150)
+                print(f"Found {len(places_150)} places at ~150km intervals:")
+                for i, place in enumerate(places_150):
+                    print(f"  {i+1}. {place}")
             else:
-                print("\nCould not get coordinates for both start and end locations. Routing test skipped.")
+                print("\nCould not get coordinates for both start and end locations. Route tests skipped.")
         else:
-            print("\nRouteService client could not be initialized. Geocoding/route tests skipped.")
+            print("\nRouteService client could not be initialized. Tests skipped.")
             print("Please check your API key and network connection.")
-    print("--- End of Basic RouteService Test ---") 
+    print("--- End of RouteService Test ---") 

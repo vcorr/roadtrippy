@@ -70,7 +70,7 @@ def get_weather_forecast(city: str) -> Dict[str, Any]: # Changed return type
         }
 
 
-root_agent = Agent(
+root_agent = Agent( # type: ignore
     name="weather_agent",
     model="gemini-2.0-flash",
     description=("Agent to answer questions about the weather forecast for a city, providing details for up to 5 days."), # Updated description

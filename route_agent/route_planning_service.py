@@ -61,7 +61,7 @@ class RouteService:
             print(f"An unexpected error occurred while geocoding '{place_name}': {e}")
             return None
 
-    def get_places_along_route(self, start_place: str, end_place: str, interval_km: float = 100) -> List[str]:
+    def get_places_along_route(self, start_place: str, end_place: str, interval_km: float = 50) -> List[str]:
         """
         Get a list of place names at intervals along the route between two places.
         This is the main method for getting places for weather forecasting.

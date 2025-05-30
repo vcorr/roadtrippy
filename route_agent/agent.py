@@ -71,7 +71,7 @@ def get_route_places(start_location: str, end_location: str, interval_km: float 
         }
 
 
-root_agent = Agent(
+root_agent = Agent( # type: ignore
     name="route_agent",
     model="gemini-2.0-flash", 
     description=("Agent to answer questions about places along driving routes between two locations, providing intermediate stops at specified intervals."),
